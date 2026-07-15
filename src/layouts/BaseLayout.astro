@@ -1,0 +1,62 @@
+---
+// BaseLayout — root HTML shell
+// Provides: <html>, <head>, SEO meta, fonts, global styles
+// All other layouts extend this one.
+import "../styles/global.css";
+
+export interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  canonicalURL?: string;
+}
+const {
+  title,
+  description = "Personal website of Gabriel Nieves — portfolio, research, and blog.",
+  image = "/og-default.png",
+  canonicalURL,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Primary Meta -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <!-- Canonical URL -->
+    {canonicalURL && <link rel="canonical" href={canonicalURL} />}
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content={image} />
+    {canonicalURL && <meta property="og:url" content={canonicalURL} />}
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+
+    <!-- Fonts: Inter + JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Favicon (placeholder) -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

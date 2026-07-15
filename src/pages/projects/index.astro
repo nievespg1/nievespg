@@ -1,0 +1,131 @@
+---
+// Projects listing page — shows all projects
+import { getCollection } from "astro:content";
+import ContentLayout from "../../layouts/ContentLayout.astro";
+import Container from "../../components/ui/Container.astro";
+import Stack from "../../components/ui/Stack.astro";
+import Surface from "../../components/ui/Surface.astro";
+
+const projects = await getCollection("projects");
+projects.sort((a, b) => {
+  if (a.data.featured && !b.data.featured) return -1;
+  if (!a.data.featured && b.data.featured) return 1;
+  return 0;
+});
+---
+
+<ContentLayout title="Projects — Gabriel Nieves">
+  <Container>
+    <div class="projects-page">
+      <header class="page-header">
+        <h1 class="page-title">Projects</h1>
+        <p class="page-description">
+          Things I've built and experiments I've explored.
+        </p>
+      </header>
+
+      {
+        projects.length === 0 ? (
+          <Surface>
+            <p class="empty-text">
+              No projects yet. Add markdown files to{" "}
+              <code>src/content/projects/</code> to see them here.
+            </p>
+          </Surface>
+        ) : (
+          <Stack gap="lg">
+            {projects.map((project) => (
+              <Surface>
+                <article>
+                  <h2 class="project-title">
+                    <a href={`/projects/${project.slug}`}>
+                      {project.data.title}
+                    </a>
+                  </h2>
+                  <p class="project-summary">{project.data.summary}</p>
+                  {project.data.technologies.length > 0 && (
+                    <div class="project-tech">
+                      {project.data.technologies.map((tech) => (
+                        <span class="badge">{tech}</span>
+                      ))}
+                    </div>
+                  )}
+                </article>
+              </Surface>
+            ))}
+          </Stack>
+        )
+      }
+    </div>
+  </Container>
+</ContentLayout>
+
+<style>
+  .projects-page {
+    padding: var(--space-3xl) 0 var(--space-4xl);
+  }
+
+  .page-header {
+    margin-bottom: var(--space-2xl);
+    padding-bottom: var(--space-xl);
+    border-bottom: var(--border-width-thin) solid var(--color-border);
+  }
+
+  .page-title {
+    font-family: var(--font-serif);
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    color: var(--color-text);
+    margin-bottom: var(--space-md);
+  }
+
+  .page-description {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  .project-title {
+    font-family: var(--font-serif);
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--space-xs);
+  }
+
+  .project-title a {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .project-title a:hover {
+    color: var(--color-primary);
+  }
+
+  .project-summary {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-sm);
+  }
+
+  .project-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 0.15em 0.6em;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-accent);
+    background: var(--color-accent-light);
+    border-radius: var(--radius-full);
+  }
+
+  .empty-text {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-tertiary);
+    margin: 0;
+  }
+</style>

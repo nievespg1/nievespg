@@ -1,0 +1,190 @@
+/* ==========================================================================
+   Typography
+   Type scale, heading styles, and text treatments.
+   Uses tokens exclusively — no hardcoded values.
+   ========================================================================== */
+
+/* ── Body ──────────────────────────────────────────────────────────────── */
+body {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+  color: var(--color-text);
+  background-color: var(--color-background);
+}
+
+/* ── Headings ──────────────────────────────────────────────────────────── */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--color-text);
+}
+
+h1 {
+  font-size: var(--font-size-4xl);
+  margin-bottom: var(--space-lg);
+}
+
+h2 {
+  font-size: var(--font-size-3xl);
+  margin-bottom: var(--space-md);
+}
+
+h3 {
+  font-size: var(--font-size-2xl);
+  margin-bottom: var(--space-md);
+}
+
+h4 {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--space-sm);
+}
+
+h5 {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--space-sm);
+}
+
+h6 {
+  font-size: var(--font-size-base);
+  margin-bottom: var(--space-sm);
+}
+
+/* ── Paragraphs ────────────────────────────────────────────────────────── */
+p {
+  margin-bottom: var(--space-md);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-secondary);
+}
+
+/* ── Links ─────────────────────────────────────────────────────────────── */
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-primary-hover);
+  text-decoration: underline;
+}
+
+/* ── Strong & Emphasis ─────────────────────────────────────────────────── */
+strong {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+}
+
+em {
+  font-style: italic;
+}
+
+/* ── Small / Caption ───────────────────────────────────────────────────── */
+small,
+.caption {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-tertiary);
+}
+
+/* ── Horizontal Rule ───────────────────────────────────────────────────── */
+hr {
+  border: none;
+  border-top: var(--border-width-thin) solid var(--color-border);
+  margin: var(--space-2xl) 0;
+}
+
+/* ── Blockquote ────────────────────────────────────────────────────────── */
+blockquote {
+  border-left: 3px solid var(--color-primary-muted);
+  padding: var(--space-md) var(--space-lg);
+  margin: var(--space-xl) 0;
+  background: var(--color-surface);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  font-style: italic;
+  color: var(--color-text-secondary);
+}
+
+blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* ── Lists ─────────────────────────────────────────────────────────────── */
+ul,
+ol {
+  margin-bottom: var(--space-md);
+  padding-left: var(--space-xl);
+  color: var(--color-text-secondary);
+}
+
+ul {
+  list-style: disc;
+}
+
+ol {
+  list-style: decimal;
+}
+
+li {
+  margin-bottom: var(--space-xs);
+}
+
+li:last-child {
+  margin-bottom: 0;
+}
+
+/* ── Code ──────────────────────────────────────────────────────────────── */
+code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  padding: 0.2em 0.4em;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-code-background);
+  color: var(--color-inline-code);
+}
+
+pre {
+  margin: var(--space-xl) 0;
+  padding: var(--space-lg);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-code-background);
+  overflow-x: auto;
+  border: var(--border-width-thin) solid var(--color-border);
+}
+
+pre code {
+  padding: 0;
+  background: none;
+  color: var(--color-code-text);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
+}
+
+/* ── Tables ────────────────────────────────────────────────────────────── */
+table {
+  width: 100%;
+  margin: var(--space-xl) 0;
+  border-collapse: collapse;
+  font-size: var(--font-size-sm);
+}
+
+th {
+  text-align: left;
+  font-weight: var(--font-weight-semibold);
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: var(--border-width-normal) solid var(--color-border);
+  color: var(--color-text);
+}
+
+td {
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: var(--border-width-thin) solid var(--color-border-light);
+  color: var(--color-text-secondary);
+}

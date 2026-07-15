@@ -1,0 +1,61 @@
+---
+// Footer — minimal site footer
+import Container from "../ui/Container.astro";
+---
+
+<footer class="footer">
+  <Container>
+    <div class="footer-inner">
+      <p class="footer-copy">
+        &copy; {new Date().getFullYear()} Gabriel Nieves
+      </p>
+      <ul class="footer-links">
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/projects">Projects</a></li>
+        <li><a href="/resume">Resume</a></li>
+      </ul>
+    </div>
+  </Container>
+</footer>
+
+<style>
+  .footer {
+    margin-top: auto;
+    padding: var(--space-2xl) 0;
+    border-top: var(--border-width-thin) solid var(--color-border);
+    background: var(--color-surface);
+  }
+
+  .footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+  }
+
+  .footer-copy {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-tertiary);
+    margin: 0;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: var(--space-lg);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .footer-links a {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-tertiary);
+    transition: color var(--transition-fast);
+  }
+
+  .footer-links a:hover {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+</style>

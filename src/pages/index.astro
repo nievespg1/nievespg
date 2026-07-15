@@ -1,0 +1,152 @@
+---
+// Homepage — hero, latest posts, featured projects, resume summary
+import ContentLayout from "../layouts/ContentLayout.astro";
+import Container from "../components/ui/Container.astro";
+import Stack from "../components/ui/Stack.astro";
+import Surface from "../components/ui/Surface.astro";
+import Button from "../components/ui/Button.astro";
+---
+
+<ContentLayout title="Gabriel Nieves — Portfolio &amp; Blog">
+  <!-- Hero -->
+  <section class="hero">
+    <Container>
+      <div class="hero-content">
+        <h1 class="hero-title">Gabriel Nieves</h1>
+        <p class="hero-tagline">
+          Researcher, engineer, and writer. I build systems, explore ideas,
+          and share what I learn along the way.
+        </p>
+        <div class="hero-actions">
+          <Button href="/blog" external={false}>Read the blog</Button>
+          <Button href="/projects" variant="secondary" external={false}>See projects</Button>
+          <Button href="/resume" variant="ghost" external={false}>View resume</Button>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Sections -->
+  <Container>
+    <Stack gap="2xl">
+      <section class="home-section">
+        <h2 class="section-heading">Latest Posts</h2>
+        <Surface>
+          <p class="placeholder-text">
+            Blog posts will appear here automatically as you add markdown files
+            to <code>src/content/blog/</code>.
+          </p>
+        </Surface>
+        <div class="section-link">
+          <a href="/blog">View all posts &rarr;</a>
+        </div>
+      </section>
+
+      <section class="home-section">
+        <h2 class="section-heading">Featured Projects</h2>
+        <Surface>
+          <p class="placeholder-text">
+            Projects will appear here automatically from
+            <code>src/content/projects/</code>.
+          </p>
+        </Surface>
+        <div class="section-link">
+          <a href="/projects">View all projects &rarr;</a>
+        </div>
+      </section>
+
+      <section class="home-section">
+        <h2 class="section-heading">About</h2>
+        <Surface>
+          <p class="placeholder-text">
+            This is a personal website built with Astro. It emphasizes
+            readability, performance, and long-term maintainability. The
+            design is inspired by premium digital publications — clean
+            typography, generous whitespace, and content-first layouts.
+          </p>
+        </Surface>
+        <div class="section-link">
+          <a href="/resume">View resume &rarr;</a>
+        </div>
+      </section>
+    </Stack>
+  </Container>
+</ContentLayout>
+
+<style>
+  .hero {
+    padding: var(--space-4xl) 0 var(--space-3xl);
+    text-align: center;
+  }
+
+  .hero-content {
+    max-width: var(--content-width);
+    margin: 0 auto;
+  }
+
+  .hero-title {
+    font-family: var(--font-serif);
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    letter-spacing: var(--letter-spacing-tight);
+    color: var(--color-text);
+    margin-bottom: var(--space-md);
+  }
+
+  .hero-tagline {
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-relaxed);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-xl);
+    max-width: 32rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  .home-section {
+    padding: var(--space-lg) 0;
+  }
+
+  .section-heading {
+    font-family: var(--font-serif);
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text);
+    margin-bottom: var(--space-md);
+  }
+
+  .placeholder-text {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-tertiary);
+    margin: 0;
+  }
+
+  .placeholder-text code {
+    font-size: 0.85em;
+    padding: 0.15em 0.4em;
+    background: var(--color-code-background);
+    border-radius: var(--radius-sm);
+  }
+
+  .section-link {
+    margin-top: var(--space-sm);
+  }
+
+  .section-link a {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-primary);
+  }
+
+  .section-link a:hover {
+    text-decoration: underline;
+  }
+</style>

@@ -1,0 +1,194 @@
+---
+// ResumeLayout — resume page layout
+// Extends ContentLayout, assembles resume sections from content collection
+import ContentLayout from "./ContentLayout.astro";
+import Container from "../components/ui/Container.astro";
+import type { CollectionEntry } from "astro:content";
+import type { AstroComponentFactory } from "astro/runtime/server/index.js";
+
+export interface Props {
+  sections: CollectionEntry<"resume">[];
+  name?: string;
+  clearance?: string;
+  contact?: string[];
+}
+
+const { sections, name, clearance, contact } = Astro.props;
+
+type RenderedEntry = {
+  entry: CollectionEntry<"resume">;
+  Content: AstroComponentFactory;
+};
+
+// Pre-render all entries so we can use their Content component
+const rendered: RenderedEntry[] = await Promise.all(
+  sections.map(async (entry) => {
+    const { Content } = await entry.render();
+    return { entry, Content };
+  }),
+);
+
+// Group sections by type
+const sectionGroups = rendered.reduce(
+  (acc, { entry, Content }) => {
+    const type = entry.data.section;
+    if (!acc[type]) acc[type] = [];
+    acc[type].push({ entry, Content });
+    return acc;
+  },
+  {} as Record<string, RenderedEntry[]>,
+);
+
+// Sort entries within each group by order
+for (const group of Object.values(sectionGroups)) {
+  group.sort((a, b) => a.entry.data.order - b.entry.data.order);
+}
+
+const sectionLabels: Record<string, string> = {
+  education: "Education",
+  experience: "Experience",
+  certifications: "Certifications",
+  awards: "Awards",
+  skills: "Skills & Technologies",
+  projects: "Projects",
+  training: "Training",
+};
+---
+
+<ContentLayout title="Resume">
+  <Container>
+    <div class="resume">
+      <header class="resume-header">
+        {
+          name && <h1 class="resume-name">{name}</h1>
+        }
+        {
+          clearance && <p class="resume-clearance">{clearance}</p>
+        }
+        {
+          contact && (
+            <ul class="resume-contact">
+              {contact.map((line) => {
+                // Auto-detect email and phone to make them clickable
+                const emailMatch = line.match(/^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/);
+                const phoneMatch = line.match(/^\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/);
+                if (emailMatch) {
+                  return <li><a href={`mailto:${line}`} class="resume-link">{line}</a></li>;
+                }
+                if (phoneMatch) {
+                  // Strip non-digits for tel: link
+                  const digits = line.replace(/\D/g, "");
+                  return <li><a href={`tel:${digits}`} class="resume-link">{line}</a></li>;
+                }
+                return <li>{line}</li>;
+              })}
+            </ul>
+          )
+        }
+      </header>
+
+      {
+        Object.entries(sectionLabels).map(([key, label]) => {
+          const entries = sectionGroups[key];
+          if (!entries) return null;
+          return (
+            <section class="resume-section">
+              <h2 class="resume-section-title">{label}</h2>
+              <div class="resume-entries">
+                {entries.map(({ entry, Content }) => (
+                  <div class="resume-entry">
+                    <h3 class="resume-entry-title">{entry.data.title}</h3>
+                    <div class="prose">
+                      <Content />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          );
+        })
+      }
+    </div>
+  </Container>
+</ContentLayout>
+
+<style>
+  .resume {
+    padding: var(--space-3xl) 0 var(--space-4xl);
+  }
+
+  .resume-header {
+    margin-bottom: var(--space-2xl);
+    padding-bottom: var(--space-xl);
+    border-bottom: var(--border-width-thin) solid var(--color-border);
+  }
+
+  .resume-name {
+    font-family: var(--font-serif);
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    color: var(--color-text);
+    margin-bottom: var(--space-sm);
+  }
+
+  .resume-clearance {
+    font-size: var(--font-size-sm);
+    color: var(--color-primary);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--space-md);
+  }
+
+  .resume-contact {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
+  }
+
+  .resume-link {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .resume-link:hover {
+    text-decoration: underline;
+  }
+
+  .resume-section {
+    margin-bottom: var(--space-2xl);
+  }
+
+  .resume-section-title {
+    font-family: var(--font-serif);
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text);
+    margin-bottom: var(--space-lg);
+    padding-bottom: var(--space-xs);
+    border-bottom: var(--border-width-thin) solid var(--color-border);
+  }
+
+  .resume-entries {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .resume-entry {
+    padding: var(--space-lg);
+    background: var(--color-surface);
+    border: var(--border-width-thin) solid var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+
+  .resume-entry-title {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+    margin-bottom: var(--space-sm);
+  }
+</style>

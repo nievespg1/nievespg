@@ -1,0 +1,145 @@
+---
+// Blog listing page — shows all published blog posts
+import { getCollection } from "astro:content";
+import ContentLayout from "../../layouts/ContentLayout.astro";
+import Container from "../../components/ui/Container.astro";
+import Stack from "../../components/ui/Stack.astro";
+import Surface from "../../components/ui/Surface.astro";
+
+const posts = await getCollection("blog", ({ data }) => !data.draft);
+posts.sort(
+  (a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime(),
+);
+---
+
+<ContentLayout title="Blog — Gabriel Nieves">
+  <Container>
+    <div class="blog-page">
+      <header class="page-header">
+        <h1 class="page-title">Blog</h1>
+        <p class="page-description">
+          Thoughts on software engineering, research, and building things.
+        </p>
+      </header>
+
+      {
+        posts.length === 0 ? (
+          <Surface>
+            <p class="empty-text">
+              No posts yet. Add markdown files to{" "}
+              <code>src/content/blog/</code> to see them here.
+            </p>
+          </Surface>
+        ) : (
+          <Stack gap="lg">
+            {posts.map((post) => (
+              <Surface>
+                <article>
+                  <h2 class="post-title">
+                    <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+                  </h2>
+                  <p class="post-description">{post.data.description}</p>
+                  <div class="post-meta">
+                    <time datetime={post.data.publishDate.toISOString()}>
+                      {post.data.publishDate.toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}
+                    </time>
+                    {post.data.tags.length > 0 && (
+                      <span class="post-tags">
+                        {post.data.tags.map((tag) => (
+                          <span class="tag">{tag}</span>
+                        ))}
+                      </span>
+                    )}
+                  </div>
+                </article>
+              </Surface>
+            ))}
+          </Stack>
+        )
+      }
+    </div>
+  </Container>
+</ContentLayout>
+
+<style>
+  .blog-page {
+    padding: var(--space-3xl) 0 var(--space-4xl);
+  }
+
+  .page-header {
+    margin-bottom: var(--space-2xl);
+    padding-bottom: var(--space-xl);
+    border-bottom: var(--border-width-thin) solid var(--color-border);
+  }
+
+  .page-title {
+    font-family: var(--font-serif);
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    color: var(--color-text);
+    margin-bottom: var(--space-md);
+  }
+
+  .page-description {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  .post-title {
+    font-family: var(--font-serif);
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--space-xs);
+  }
+
+  .post-title a {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .post-title a:hover {
+    color: var(--color-primary);
+  }
+
+  .post-description {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-sm);
+  }
+
+  .post-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-md);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-tertiary);
+  }
+
+  .post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 0.15em 0.6em;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-primary);
+    background: var(--color-primary-light);
+    border-radius: var(--radius-full);
+  }
+
+  .empty-text {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-tertiary);
+    margin: 0;
+  }
+</style>

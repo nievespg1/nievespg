@@ -1,0 +1,33 @@
+---
+// Surface — themed card/panel container
+export interface Props {
+  padding?: "sm" | "md" | "lg";
+  as?: "div" | "article" | "section";
+  class?: string;
+}
+const { padding = "md", as: Tag = "div", class: className } = Astro.props;
+
+const paddingMap: Record<string, string> = {
+  sm: "var(--space-md)",
+  md: "var(--space-lg)",
+  lg: "var(--space-xl)",
+};
+const paddingValue = paddingMap[padding] ?? paddingMap.md;
+---
+
+<Tag
+  class={`surface ${className ?? ""}`}
+  style={`--surface-padding: ${paddingValue};`}
+>
+  <slot />
+</Tag>
+
+<style>
+  .surface {
+    padding: var(--surface-padding);
+    background: var(--color-surface);
+    border: var(--border-width-thin) solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+  }
+</style>

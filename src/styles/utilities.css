@@ -1,0 +1,50 @@
+/* ==========================================================================
+   Utilities
+   Minimal utility classes. Prefer semantic class names in components.
+   Only add utilities that are genuinely needed across multiple components.
+   ========================================================================== */
+
+/* ── Screen reader only ────────────────────────────────────────────────── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ── Truncate ──────────────────────────────────────────────────────────── */
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Content width ─────────────────────────────────────────────────────── */
+.content-width {
+  max-width: var(--content-width);
+  margin-inline: auto;
+}
+
+/* ── Page width ────────────────────────────────────────────────────────── */
+.page-width {
+  max-width: var(--page-width);
+  margin-inline: auto;
+}
+
+/* ── Text alignment ────────────────────────────────────────────────────── */
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}

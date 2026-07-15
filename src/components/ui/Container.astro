@@ -1,0 +1,23 @@
+---
+// Container — constrains content width
+// Uses --content-width by default, or --page-width for wider layouts
+export interface Props {
+  size?: "content" | "page" | "article";
+  as?: "div" | "section" | "article" | "header" | "footer";
+  class?: string;
+}
+const { size = "content", as: Tag = "div", class: className } = Astro.props;
+const widthClass = size === "page" ? "page-width" : size === "article" ? "content-width" : "content-width";
+---
+
+<Tag class={`${widthClass} ${className ?? ""}`}>
+  <slot />
+</Tag>
+
+<style>
+  .content-width,
+  .page-width {
+    width: 100%;
+    padding-inline: var(--space-lg);
+  }
+</style>

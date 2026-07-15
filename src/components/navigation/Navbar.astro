@@ -1,0 +1,68 @@
+---
+// Navbar — minimal site navigation
+import Container from "../ui/Container.astro";
+---
+
+<nav class="navbar">
+  <Container size="page">
+    <div class="navbar-inner">
+      <a href="/" class="navbar-brand">Gabriel Nieves</a>
+      <ul class="navbar-links">
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/projects">Projects</a></li>
+        <li><a href="/resume">Resume</a></li>
+      </ul>
+    </div>
+  </Container>
+</nav>
+
+<style>
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--color-background);
+    border-bottom: var(--border-width-thin) solid var(--color-border);
+    padding: var(--space-md) 0;
+  }
+
+  .navbar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .navbar-brand {
+    font-family: var(--font-serif);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text);
+    letter-spacing: var(--letter-spacing-tight);
+    transition: color var(--transition-fast);
+  }
+
+  .navbar-brand:hover {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .navbar-links {
+    display: flex;
+    gap: var(--space-lg);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .navbar-links a {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+    transition: color var(--transition-fast);
+  }
+
+  .navbar-links a:hover {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+</style>

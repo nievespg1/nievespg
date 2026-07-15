@@ -1,0 +1,28 @@
+---
+// Individual project page — dynamic route
+import { getCollection } from "astro:content";
+import ProjectLayout from "../../layouts/ProjectLayout.astro";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await project.render();
+---
+
+<ProjectLayout
+  title={project.data.title}
+  summary={project.data.summary}
+  technologies={project.data.technologies}
+  github={project.data.github}
+  website={project.data.website}
+  image={project.data.image}
+  canonicalURL={`/projects/${project.slug}`}
+>
+  <Content />
+</ProjectLayout>

@@ -1,0 +1,18 @@
+---
+// Resume page
+import { getCollection } from "astro:content";
+import ResumeLayout from "../layouts/ResumeLayout.astro";
+
+const sections = await getCollection("resume");
+---
+
+<ResumeLayout
+  sections={sections}
+  name="Gabriel Nieves"
+  clearance="TS/SCI Clearance with Polygraph (Active since 2020)"
+  contact={[
+    "14811 Plainfield Ln, Germantown, MD 20874",
+    "(787) 949-1070",
+    "gabriel@nievespg.com",
+  ]}
+/>

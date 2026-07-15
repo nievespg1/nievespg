@@ -1,0 +1,127 @@
+---
+// ProjectLayout — project case study page layout
+// Extends ContentLayout, adds hero, technologies, links
+import ContentLayout from "./ContentLayout.astro";
+import Container from "../components/ui/Container.astro";
+export interface Props {
+  title: string;
+  summary: string;
+  technologies?: string[];
+  github?: string;
+  website?: string;
+  image?: string;
+  canonicalURL?: string;
+}
+const {
+  title,
+  summary,
+  technologies = [],
+  github,
+  website,
+  image,
+  canonicalURL,
+} = Astro.props;
+---
+
+<ContentLayout
+  title={title}
+  description={summary}
+  image={image}
+  canonicalURL={canonicalURL}
+>
+  <Container>
+    <article class="project">
+      <header class="project-header">
+        <h1 class="project-title">{title}</h1>
+        <p class="project-summary">{summary}</p>
+
+        {technologies.length > 0 && (
+          <div class="project-tech">
+            {technologies.map((tech) => <span class="badge">{tech}</span>)}
+          </div>
+        )}
+
+        {(github || website) && (
+          <div class="project-links">
+            {github && (
+              <a href={github} class="project-link" rel="noopener noreferrer" target="_blank">
+                GitHub &rarr;
+              </a>
+            )}
+            {website && (
+              <a href={website} class="project-link" rel="noopener noreferrer" target="_blank">
+                Live Demo &rarr;
+              </a>
+            )}
+          </div>
+        )}
+      </header>
+
+      <div class="project-body prose">
+        <slot />
+      </div>
+    </article>
+  </Container>
+</ContentLayout>
+
+<style>
+  .project {
+    padding: var(--space-3xl) 0 var(--space-4xl);
+  }
+
+  .project-header {
+    margin-bottom: var(--space-2xl);
+    padding-bottom: var(--space-xl);
+    border-bottom: var(--border-width-thin) solid var(--color-border);
+  }
+
+  .project-title {
+    font-family: var(--font-serif);
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    color: var(--color-text);
+    margin-bottom: var(--space-md);
+  }
+
+  .project-summary {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-lg);
+    line-height: var(--line-height-relaxed);
+  }
+
+  .project-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-md);
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 0.2em 0.7em;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-accent);
+    background: var(--color-accent-light);
+    border-radius: var(--radius-full);
+  }
+
+  .project-links {
+    display: flex;
+    gap: var(--space-lg);
+  }
+
+  .project-link {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-primary);
+    transition: color var(--transition-fast);
+  }
+
+  .project-link:hover {
+    color: var(--color-primary-hover);
+    text-decoration: underline;
+  }
+</style>

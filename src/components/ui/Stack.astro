@@ -1,0 +1,33 @@
+---
+// Stack — vertical layout with consistent spacing
+export interface Props {
+  gap?: "sm" | "md" | "lg" | "xl" | "2xl";
+  as?: "div" | "section" | "article" | "header" | "footer" | "ul" | "ol";
+  class?: string;
+}
+const { gap = "md", as: Tag = "div", class: className } = Astro.props;
+
+const gapMap: Record<string, string> = {
+  sm: "var(--space-sm)",
+  md: "var(--space-md)",
+  lg: "var(--space-lg)",
+  xl: "var(--space-xl)",
+  "2xl": "var(--space-2xl)",
+};
+const gapValue = gapMap[gap] ?? gapMap.md;
+---
+
+<Tag
+  class={`stack ${className ?? ""}`}
+  style={`--stack-gap: ${gapValue};`}
+>
+  <slot />
+</Tag>
+
+<style>
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--stack-gap);
+  }
+</style>
