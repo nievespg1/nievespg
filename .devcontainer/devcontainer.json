@@ -4,6 +4,9 @@
     "dockerfile": "Dockerfile",
     "context": ".."
   },
+  "containerEnv": {
+    "CLAUDE_CODE_SETTINGS": "/mnt/c/Users/Work Gabe/.claude/settings.json"
+  },
   "runArgs": [
     "--gpus",
     "all",

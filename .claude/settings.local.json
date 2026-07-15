@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(chmod +x *)",
+      "WebSearch",
+      "Bash(pnpm build *)",
+      "Bash(pnpm add *)",
+      "Bash(npm list *)",
+      "Read(//home/vscode/.npm-global/lib/node_modules/@anthropic-ai/claude-code/**)",
+      "Bash(node *)",
+      "Bash(npm ls *)",
+      "Bash(npm config *)",
+      "Read(//c/Users/Work Gabe/.local/bin/**)",
+      "Bash(\"/c/Users/Work Gabe/.local/bin/claude\" --version)",
+      "Bash(claude *)",
+      "Bash(ls /workspace/)",
+      "Read(//proc/1/**)"
+    ]
+  }
+}

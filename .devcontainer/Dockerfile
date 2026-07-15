@@ -22,12 +22,18 @@ RUN apt-get update \
 
 # Install Node.js/npm for CLI tools that are distributed through npm.
 # pnpm is the project's package manager — install it via corepack (the recommended way).
+# COREPACK_ENABLE_DOWNLOAD_PROMPT=0 suppresses the interactive "[Y/n]" prompt
+# that newer Node.js versions show before downloading the package manager binary.
 RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
  && DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends nodejs \
  && npm install -g npm@latest \
- && corepack enable pnpm \
- && corepack prepare pnpm@latest --activate \
+ && COREPACK_ENABLE_DOWNLOAD_PROMPT=0 corepack enable pnpm \
+ && COREPACK_ENABLE_DOWNLOAD_PROMPT=0 corepack prepare pnpm@latest --activate \
  && rm -rf /var/lib/apt/lists/*
+
+# Persist the env var so that any subsequent on-demand download (e.g. during
+# `pnpm install`) also skips the prompt in headless/CI environments.
+ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
 
 
 # Create a non-root `vscode` user expected by Dev Containers
