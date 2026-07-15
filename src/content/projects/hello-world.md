@@ -39,5 +39,5 @@ The design draws inspiration from premium digital publications like Claude.ai:
 - Content Collections with Zod validation
 - Dark mode support via CSS custom properties
 - Responsive typography with fluid type scale
-- Zero JavaScript by default
+- Lightweight by design
 - Markdown-first authoring with MDX for interactive elements

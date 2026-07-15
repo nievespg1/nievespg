@@ -1,10 +1,21 @@
 ---
 // Homepage — hero, latest posts, featured projects, resume summary
+import { getCollection } from "astro:content";
 import ContentLayout from "../layouts/ContentLayout.astro";
 import Container from "../components/ui/Container.astro";
 import Stack from "../components/ui/Stack.astro";
 import Surface from "../components/ui/Surface.astro";
 import Button from "../components/ui/Button.astro";
+
+// Latest 3 published posts, sorted by recency
+const latestPosts = (await getCollection("blog", ({ data }) => !data.draft))
+  .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime())
+  .slice(0, 3);
+
+// Up to 3 featured projects
+const featuredProjects = (await getCollection("projects"))
+  .filter(({ data }) => data.featured)
+  .slice(0, 3);
 ---
 
 <ContentLayout title="Gabriel Nieves — Portfolio &amp; Blog">
@@ -20,7 +31,7 @@ import Button from "../components/ui/Button.astro";
         <div class="hero-actions">
           <Button href="/blog" external={false}>Read the blog</Button>
           <Button href="/projects" variant="secondary" external={false}>See projects</Button>
-          <Button href="/resume" variant="ghost" external={false}>View resume</Button>
+          <Button href="/resume" variant="secondary" external={false}>View resume</Button>
         </div>
       </div>
     </Container>
@@ -31,12 +42,42 @@ import Button from "../components/ui/Button.astro";
     <Stack gap="2xl">
       <section class="home-section">
         <h2 class="section-heading">Latest Posts</h2>
-        <Surface>
-          <p class="placeholder-text">
-            Blog posts will appear here automatically as you add markdown files
-            to <code>src/content/blog/</code>.
-          </p>
-        </Surface>
+        {latestPosts.length === 0 ? (
+          <Surface>
+            <p class="placeholder-text">
+              No posts yet — check back soon.
+            </p>
+          </Surface>
+        ) : (
+          <Stack gap="md">
+            {latestPosts.map((post) => (
+              <Surface>
+                <article class="card">
+                  <h3 class="card-title">
+                    <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+                  </h3>
+                  <p class="card-description">{post.data.description}</p>
+                  <div class="card-meta">
+                    <time datetime={post.data.publishDate.toISOString()}>
+                      {post.data.publishDate.toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}
+                    </time>
+                    {post.data.tags.length > 0 && (
+                      <span class="card-tags">
+                        {post.data.tags.slice(0, 3).map((tag) => (
+                          <span class="tag">{tag}</span>
+                        ))}
+                      </span>
+                    )}
+                  </div>
+                </article>
+              </Surface>
+            ))}
+          </Stack>
+        )}
         <div class="section-link">
           <a href="/blog">View all posts &rarr;</a>
         </div>
@@ -44,29 +85,37 @@ import Button from "../components/ui/Button.astro";
 
       <section class="home-section">
         <h2 class="section-heading">Featured Projects</h2>
-        <Surface>
-          <p class="placeholder-text">
-            Projects will appear here automatically from
-            <code>src/content/projects/</code>.
-          </p>
-        </Surface>
+        {featuredProjects.length === 0 ? (
+          <Surface>
+            <p class="placeholder-text">
+              No featured projects yet.
+            </p>
+          </Surface>
+        ) : (
+          <Stack gap="md">
+            {featuredProjects.map((project) => (
+              <Surface>
+                <article class="card">
+                  <h3 class="card-title">
+                    <a href={`/projects/${project.slug}`}>
+                      {project.data.title}
+                    </a>
+                  </h3>
+                  <p class="card-description">{project.data.summary}</p>
+                  {project.data.technologies.length > 0 && (
+                    <div class="card-tech">
+                      {project.data.technologies.map((tech) => (
+                        <span class="badge">{tech}</span>
+                      ))}
+                    </div>
+                  )}
+                </article>
+              </Surface>
+            ))}
+          </Stack>
+        )}
         <div class="section-link">
           <a href="/projects">View all projects &rarr;</a>
-        </div>
-      </section>
-
-      <section class="home-section">
-        <h2 class="section-heading">About</h2>
-        <Surface>
-          <p class="placeholder-text">
-            This is a personal website built with Astro. It emphasizes
-            readability, performance, and long-term maintainability. The
-            design is inspired by premium digital publications — clean
-            typography, generous whitespace, and content-first layouts.
-          </p>
-        </Surface>
-        <div class="section-link">
-          <a href="/resume">View resume &rarr;</a>
         </div>
       </section>
     </Stack>
@@ -148,5 +197,74 @@ import Button from "../components/ui/Button.astro";
 
   .section-link a:hover {
     text-decoration: underline;
+  }
+
+  /* ── Card styles ──────────────────────────────────────────────────────── */
+  .card {
+    padding: 0;
+  }
+
+  .card-title {
+    font-family: var(--font-serif);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    margin: 0 0 var(--space-2xs);
+  }
+
+  .card-title a {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .card-title a:hover {
+    color: var(--color-primary);
+  }
+
+  .card-description {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-normal);
+    margin: 0 0 var(--space-xs);
+  }
+
+  .card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-tertiary);
+  }
+
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs);
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 0.15em 0.5em;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-primary);
+    background: var(--color-primary-light);
+    border-radius: var(--radius-full);
+  }
+
+  .card-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs);
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 0.15em 0.5em;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-accent);
+    background: var(--color-accent-light);
+    border-radius: var(--radius-full);
   }
 </style>

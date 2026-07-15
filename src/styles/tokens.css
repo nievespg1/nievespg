@@ -105,8 +105,8 @@
   --transition-slow: 400ms ease;
 
   /* ── Borders ─────────────────────────────────────────────────────────── */
-  --border-width-thin: 1px;
-  --border-width-normal: 2px;
+  --border-width-thin: 2px;
+  --border-width-normal: 3px;
 }
 
 /* ── Dark Theme ────────────────────────────────────────────────────────── */

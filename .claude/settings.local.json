@@ -14,7 +14,8 @@
       "Bash(\"/c/Users/Work Gabe/.local/bin/claude\" --version)",
       "Bash(claude *)",
       "Bash(ls /workspace/)",
-      "Read(//proc/1/**)"
+      "Read(//proc/1/**)",
+      "Bash(grep *)"
     ]
   }
 }
