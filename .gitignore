@@ -1,4 +1,10 @@
-# Byte-compiled / optimized / DLL files
+# ── Node / Astro ──────────────────────────────────────────────────────────
+node_modules/
+dist/
+.astro/
+.pnpm-store/
+
+# ── Byte-compiled / optimized / DLL files ────────────────────────────────
 __pycache__/
 *.py[codz]
 *$py.class

@@ -1,0 +1,35 @@
+{
+  "name": "nievespg-devcontainer",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "runArgs": [
+    "--gpus",
+    "all",
+    "--mount",
+    "type=bind,source=C:\\,target=/mnt/c,consistency=cached",
+    "--mount",
+    "type=bind,source=F:\\,target=/mnt/ssd,consistency=cached",
+    "--mount",
+    "type=bind,source=D:\\,target=/mnt/hdd,consistency=cached"
+  ],
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace/nievespg,type=bind,consistency=cached",
+  "workspaceFolder": "/workspace/nievespg",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash",
+        "python.defaultInterpreterPath": "/home/vscode/micromamba/envs/sfx/bin/python"
+      },
+      "extensions": [
+        "ms-vscode.cpptools",
+        "ms-python.python",
+        "tamasfe.even-better-toml",
+        "astro-build.astro-vscode"
+      ]
+    }
+  },
+  "postCreateCommand": "bash .devcontainer/scripts/post-create.sh",
+  "remoteUser": "vscode"
+}
