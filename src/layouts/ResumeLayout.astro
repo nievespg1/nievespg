@@ -53,6 +53,14 @@ const sectionLabels: Record<string, string> = {
   projects: "Projects",
   training: "Training",
 };
+
+// Extract individual contact items for structured two-line layout
+const emailRegex = /^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
+const phoneRegex = /^\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/;
+
+const emailLine = contact?.find((l) => emailRegex.test(l));
+const phoneLine = contact?.find((l) => phoneRegex.test(l));
+const addressLine = contact?.find((l) => !emailRegex.test(l) && !phoneRegex.test(l));
 ---
 
 <ContentLayout title="Resume">
@@ -67,22 +75,39 @@ const sectionLabels: Record<string, string> = {
         }
         {
           contact && (
-            <ul class="resume-contact">
-              {contact.map((line) => {
-                // Auto-detect email and phone to make them clickable
-                const emailMatch = line.match(/^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/);
-                const phoneMatch = line.match(/^\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/);
-                if (emailMatch) {
-                  return <li><a href={`mailto:${line}`} class="resume-link">{line}</a></li>;
-                }
-                if (phoneMatch) {
-                  // Strip non-digits for tel: link
-                  const digits = line.replace(/\D/g, "");
-                  return <li><a href={`tel:${digits}`} class="resume-link">{line}</a></li>;
-                }
-                return <li>{line}</li>;
-              })}
-            </ul>
+            <div class="resume-contact">
+              <div class="contact-row contact-row--primary">
+                {phoneLine && (
+                  <>
+                    <a href={`tel:${phoneLine.replace(/\D/g, "")}`} class="resume-link">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                      </svg>
+                      {phoneLine}
+                    </a>
+                    {emailLine && <span class="contact-separator" aria-hidden="true">·</span>}
+                  </>
+                )}
+                {emailLine && (
+                  <a href={`mailto:${emailLine}`} class="resume-link">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <rect x="2" y="4" width="20" height="16" rx="2"/>
+                      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                    </svg>
+                    {emailLine}
+                  </a>
+                )}
+              </div>
+              {addressLine && (
+                <div class="contact-row contact-row--address">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+                    <circle cx="12" cy="10" r="3"/>
+                  </svg>
+                  {addressLine}
+                </div>
+              )}
+            </div>
           )
         }
       </header>
@@ -140,21 +165,48 @@ const sectionLabels: Record<string, string> = {
   }
 
   .resume-contact {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+  }
+
+  .contact-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-2xs);
     font-size: var(--font-size-sm);
     color: var(--color-text-secondary);
     line-height: var(--line-height-relaxed);
   }
 
+  .contact-row--primary {
+    gap: var(--space-sm);
+  }
+
   .resume-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2xs);
     color: var(--color-primary);
     text-decoration: none;
+    white-space: nowrap;
   }
 
   .resume-link:hover {
     text-decoration: underline;
+  }
+
+  .resume-link svg,
+  .contact-row--address svg {
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
+  }
+
+  .contact-separator {
+    color: var(--color-text-tertiary);
+    user-select: none;
   }
 
   .resume-section {
