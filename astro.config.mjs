@@ -20,8 +20,8 @@ function rehypeExternalLinks() {
 // https://astro.build/config
 export default defineConfig({
   integrations: [mdx()],
-  site: "https://nievespg1.github.io",
-  base: "/nievespg",
+  site: "www.nievespg.com",
+  base: "/",
   markdown: {
     shikiConfig: {
       theme: "github-light",
