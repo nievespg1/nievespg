@@ -38,7 +38,7 @@ projects.sort((a, b) => {
               <Surface>
                 <article>
                   <h2 class="project-title">
-                    <a href={`/projects/${project.slug}`}>
+                    <a href={import.meta.env.BASE_URL + "/projects/" + project.slug}>
                       {project.data.title}
                     </a>
                   </h2>

@@ -6,12 +6,12 @@ import Container from "../ui/Container.astro";
 <nav class="navbar">
   <Container size="page">
     <div class="navbar-inner">
-      <a href="/" class="navbar-brand">Gabriel Nieves</a>
+      <a href={import.meta.env.BASE_URL} class="navbar-brand">Gabriel Nieves</a>
       <div class="navbar-right">
         <ul class="navbar-links">
-          <li><a href="/blog">Blog</a></li>
-          <li><a href="/projects">Projects</a></li>
-          <li><a href="/resume">Resume</a></li>
+          <li><a href={import.meta.env.BASE_URL + "/blog"}>Blog</a></li>
+          <li><a href={import.meta.env.BASE_URL + "/projects"}>Projects</a></li>
+          <li><a href={import.meta.env.BASE_URL + "/resume"}>Resume</a></li>
         </ul>
         <button
           id="theme-toggle"

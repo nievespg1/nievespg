@@ -15,7 +15,13 @@
       "Bash(claude *)",
       "Bash(ls /workspace/)",
       "Read(//proc/1/**)",
-      "Bash(grep *)"
+      "Bash(grep *)",
+      "Bash(curl -s https://nievespg1.github.io/nievespg/)",
+      "Bash(curl *)",
+      "Bash(python3 -c \"from PIL import Image; print\\('PIL available'\\)\")",
+      "Bash(python3 -c \"import struct; zlib; print\\('can create raw PNG'\\)\")",
+      "Bash(python3 *)",
+      "Bash(xxd /workspace/nievespg/public/og-default.png)"
     ]
   }
 }

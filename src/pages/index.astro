@@ -29,9 +29,9 @@ const featuredProjects = (await getCollection("projects"))
           and share what I learn along the way.
         </p>
         <div class="hero-actions">
-          <Button href="/blog" external={false}>Read the blog</Button>
-          <Button href="/projects" variant="secondary" external={false}>See projects</Button>
-          <Button href="/resume" variant="secondary" external={false}>View resume</Button>
+          <Button href={import.meta.env.BASE_URL + "/blog"} external={false}>Read the blog</Button>
+          <Button href={import.meta.env.BASE_URL + "/projects"} variant="secondary" external={false}>See projects</Button>
+          <Button href={import.meta.env.BASE_URL + "/resume"} variant="secondary" external={false}>View resume</Button>
         </div>
       </div>
     </Container>
@@ -54,7 +54,7 @@ const featuredProjects = (await getCollection("projects"))
               <Surface>
                 <article class="card">
                   <h3 class="card-title">
-                    <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+                    <a href={import.meta.env.BASE_URL + "/blog/" + post.slug}>{post.data.title}</a>
                   </h3>
                   <p class="card-description">{post.data.description}</p>
                   <div class="card-meta">
@@ -79,7 +79,7 @@ const featuredProjects = (await getCollection("projects"))
           </Stack>
         )}
         <div class="section-link">
-          <a href="/blog">View all posts &rarr;</a>
+          <a href={import.meta.env.BASE_URL + "/blog"}>View all posts &rarr;</a>
         </div>
       </section>
 
@@ -97,7 +97,7 @@ const featuredProjects = (await getCollection("projects"))
               <Surface>
                 <article class="card">
                   <h3 class="card-title">
-                    <a href={`/projects/${project.slug}`}>
+                    <a href={import.meta.env.BASE_URL + "/projects/" + project.slug}>
                       {project.data.title}
                     </a>
                   </h3>
@@ -115,7 +115,7 @@ const featuredProjects = (await getCollection("projects"))
           </Stack>
         )}
         <div class="section-link">
-          <a href="/projects">View all projects &rarr;</a>
+          <a href={import.meta.env.BASE_URL + "/projects"}>View all projects &rarr;</a>
         </div>
       </section>
     </Stack>

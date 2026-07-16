@@ -10,9 +10,9 @@ import Container from "../ui/Container.astro";
         &copy; {new Date().getFullYear()} Gabriel Nieves
       </p>
       <ul class="footer-links">
-        <li><a href="/blog">Blog</a></li>
-        <li><a href="/projects">Projects</a></li>
-        <li><a href="/resume">Resume</a></li>
+        <li><a href={import.meta.env.BASE_URL + "/blog"}>Blog</a></li>
+        <li><a href={import.meta.env.BASE_URL + "/projects"}>Projects</a></li>
+        <li><a href={import.meta.env.BASE_URL + "/resume"}>Resume</a></li>
       </ul>
     </div>
   </Container>

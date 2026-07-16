@@ -21,7 +21,7 @@ const { Content } = await post.render();
   publishDate={post.data.publishDate}
   tags={post.data.tags}
   image={post.data.image}
-  canonicalURL={`/blog/${post.slug}`}
+  canonicalURL={import.meta.env.BASE_URL + "/blog/" + post.slug}
 >
   <Content />
 </BlogLayout>

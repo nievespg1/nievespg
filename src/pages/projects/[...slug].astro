@@ -22,7 +22,7 @@ const { Content } = await project.render();
   github={project.data.github}
   website={project.data.website}
   image={project.data.image}
-  canonicalURL={`/projects/${project.slug}`}
+  canonicalURL={import.meta.env.BASE_URL + "/projects/" + project.slug}
 >
   <Content />
 </ProjectLayout>
