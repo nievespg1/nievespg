@@ -21,7 +21,12 @@
       "Bash(python3 -c \"from PIL import Image; print\\('PIL available'\\)\")",
       "Bash(python3 -c \"import struct; zlib; print\\('can create raw PNG'\\)\")",
       "Bash(python3 *)",
-      "Bash(xxd /workspace/nievespg/public/og-default.png)"
+      "Bash(xxd /workspace/nievespg/public/og-default.png)",
+      "Bash(/usr/bin/grep -n 'Fig\\\\.' /workspace/nievespg/src/content/blog/image-retrieval.md)",
+      "Bash(/usr/bin/grep -n 'figure [0-9]' /workspace/nievespg/src/content/blog/image-retrieval.md)",
+      "Bash(/usr/bin/grep -c '<figure' /workspace/nievespg/dist/blog/image-retrieval/index.html)",
+      "Bash(/usr/bin/grep -c 'class=\"ref\"' /workspace/nievespg/dist/blog/image-retrieval/index.html)",
+      "Bash(/usr/bin/grep *)"
     ]
   }
 }

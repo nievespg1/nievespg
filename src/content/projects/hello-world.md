@@ -8,12 +8,8 @@ technologies:
   - Markdown
   - MDX
 featured: true
-github: "https://github.com/nievespg/nievespg"
+github: "https://github.com/nievespg1/nievespg"
 ---
-
-# Personal Website
-
-This website is a personal portfolio and technical blog. It's built from the ground up with a focus on content-first design and long-term maintainability.
 
 ## Architecture
 

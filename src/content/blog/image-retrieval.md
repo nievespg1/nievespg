@@ -9,13 +9,10 @@ draft: false
 image: "https://miro.medium.com/v2/resize:fit:2000/1*UN0fkaWdyxyt2OdbbhLQzA.jpeg"
 ---
 
+![Convolutional Activation Map (CAM)](https://miro.medium.com/v2/resize:fit:2000/1*UN0fkaWdyxyt2OdbbhLQzA.jpeg)
+
 *Originally published on [Medium](https://medium.com/@gabriel_83172/how-to-find-similar-images-using-math-a-gentile-introduction-to-image-retrieval-and-neural-67f3c987b643) — June 22, 2020 · 25 min read*
 
-Most of us are probably familiar with search engines such as Google, Bing, DuckDuckGo, and their functionality. You type a series of keywords and expect to get a list of documents with some relationship to the provided tokens. If the system is good, one can expect that the documents at the top of the list will be more relevant than the rest. This paradigm we just described is one of the problems that the field of [Information Retrieval](https://en.wikipedia.org/wiki/Information_retrieval) tackles every day.
-
-In the previous example, we used plain text as our query. But what if you wanted to look for a particular image? Maybe you liked a particular painting and would like to find similar styles or maybe you are a doctor working with cancer patients trying to find similar images to aid in your prognosis. For both of these cases, the question remains, how do we compare two images? What does it mean for two images to be the same? Well, in the next few sections we will discuss some common methods currently employed to achieve such a goal.
-
-![Convolutional Activation Map (CAM)](https://miro.medium.com/v2/resize:fit:2000/1*UN0fkaWdyxyt2OdbbhLQzA.jpeg)
 
 ## Terminology
 
@@ -39,17 +36,17 @@ In the previous example, we used plain text as our query. But what if you wanted
 
 ## What is an image?
 
-Before moving any further, let's define how we represent images. In computer vision, we treat images as a matrix of pixels. I don't want to focus too much on the mathematical definition of a matrix but for the purpose of this essay, you can think of a matrix as a table where items are arranged in rows and columns (see Figure 1) — kind of like an excel sheet.
+Before moving any further, let's define how we represent images. In computer vision, we treat images as a matrix of pixels. I don't want to focus too much on the mathematical definition of a matrix but for the purpose of this essay, you can think of a matrix as a table where items are arranged in rows and columns (see {@fig:pixel-matrix}) — kind of like an excel sheet.
 
-![Fig. 1. Example of an image as a pixel matrix. See that we can reference each pixel by its position (row number, column number) on the matrix.](https://miro.medium.com/v2/resize:fit:1192/1*pHZ5B9I5lu2Uvx7KUMC6wA.png)
+![Example of an image as a pixel matrix. See that we can reference each pixel by its position (row number, column number) on the matrix.](https://miro.medium.com/v2/resize:fit:1192/1*pHZ5B9I5lu2Uvx7KUMC6wA.png) {#fig:pixel-matrix}
 
-A pixel is a minute area of illumination that contains three light sources, Red, Green, and Blue (see Figure 2). The number of pixels in a device can be computed from its resolution. For example, most Full High Definition (FHD) 1080p widescreen TVs tend to have a resolution of (1920x1080) which means that there are 1,920 pixels for each row and 1,080 rows in total. If we multiply the number of pixels per row by the number of rows we get a total of 2,073,600 pixels or 2M pixels — keep in mind that this is one example out of many other resolutions and aspect ratios.
+A pixel is a minute area of illumination that contains three light sources, Red, Green, and Blue (see {@fig:rgb-pixel}). The number of pixels in a device can be computed from its resolution. For example, most Full High Definition (FHD) 1080p widescreen TVs tend to have a resolution of (1920x1080) which means that there are 1,920 pixels for each row and 1,080 rows in total. If we multiply the number of pixels per row by the number of rows we get a total of 2,073,600 pixels or 2M pixels — keep in mind that this is one example out of many other resolutions and aspect ratios.
 
-![Fig.2. Photo by Umberto on Unsplash](https://miro.medium.com/v2/resize:fit:1200/1*d9_Ux5H8mV9UgBGHb_98Iw.jpeg)
+![Photo by Umberto on Unsplash](https://miro.medium.com/v2/resize:fit:1200/1*d9_Ux5H8mV9UgBGHb_98Iw.jpeg) {#fig:rgb-pixel}
 
-Before a device can display a picture it needs to know how bright each pixel needs to be. An image file contains a matrix of pixel values and each pixel value contain three color intensity values (Red, Green, and Blue). This format is known as RGB. The pixel color intensity value ranges from zero (no illumination) to 255 (max illumination). These color values are also called channels. If you pass 255 for every pixel in the red channel and zero for the green and blue channels, all the red lights will be illuminated to the maximum brightness while the green and blue lights will be turned off (see Figure 3). Using this knowledge along with the [Additive Color](http://hyperphysics.phy-astr.gsu.edu/hbase/vision/addcol.html) theory, we can generate any color within the RGB color gamut.
+Before a device can display a picture it needs to know how bright each pixel needs to be. An image file contains a matrix of pixel values and each pixel value contain three color intensity values (Red, Green, and Blue). This format is known as RGB. The pixel color intensity value ranges from zero (no illumination) to 255 (max illumination). These color values are also called channels. If you pass 255 for every pixel in the red channel and zero for the green and blue channels, all the red lights will be illuminated to the maximum brightness while the green and blue lights will be turned off (see {@fig:rgb-mixing}). Using this knowledge along with the [Additive Color](http://hyperphysics.phy-astr.gsu.edu/hbase/vision/addcol.html) theory, we can generate any color within the RGB color gamut.
 
-![Fig. 3. By mixing different RGB colors and intensities, we can generate new colors.](https://miro.medium.com/v2/resize:fit:1368/1*4BVJQC4bifc8uRMBw4ah0g.png)
+![By mixing different RGB colors and intensities, we can generate new colors.](https://miro.medium.com/v2/resize:fit:1368/1*4BVJQC4bifc8uRMBw4ah0g.png) {#fig:rgb-mixing}
 
 ## Image Comparison
 
@@ -59,11 +56,11 @@ The three most common image properties that are used for image retrieval are **c
 
 ## Image Retrieval via color
 
-The most simple way to represent an image is by looking at the distribution of colors within the image. Remember that in the previous section we define images as a matrix of pixels where the pixels contained numeric values that represented the illumination intensity of a particular color. We can compute the distribution of color intensities for each channel (Red, Green, and Blue) using a [histogram](https://www.mathsisfun.com/data/histograms.html) (see Figure 4). All you need to know about histograms is that they aggregate values into bins and count the number of items in each bin.
+The most simple way to represent an image is by looking at the distribution of colors within the image. Remember that in the previous section we define images as a matrix of pixels where the pixels contained numeric values that represented the illumination intensity of a particular color. We can compute the distribution of color intensities for each channel (Red, Green, and Blue) using a [histogram](https://www.mathsisfun.com/data/histograms.html) (see {@fig:rgb-histogram}). All you need to know about histograms is that they aggregate values into bins and count the number of items in each bin.
 
 You might be thinking "why are we computing the distribution of pixels rather than do a 1 to 1 comparison?". That is a fair question, but remember when we explain the concept of resolution and pixel count? In that example, we had a pixel count of approximately two million. Now imagine we have a database of a thousand equally large images, comparing each pixel in each image against a similar image would require (10⁶ * 10⁶ * 10³) computations or one thousand trillion computations for just one image query. This process would be too slow for any practical application as well as very inaccurate. Because of this, we transform the images into a vector that carries the information in a more compacted way.
 
-![Fig. 4. RGB channel histogram with 255 bins. From these three histograms, we can infer that the query image (image of trevi fountain) will likely contain lighter colors (in this case, the light hue of the marble). This is because we have a higher number of pixels with high intensity values for all three channels. The closer the values get to 255, the more illumination we get for that color.](https://miro.medium.com/v2/resize:fit:1400/1*y9yMcwLh2SLDjDV9PUYXWQ.png)
+![RGB channel histogram with 255 bins. From these three histograms, we can infer that the query image (image of trevi fountain) will likely contain lighter colors (in this case, the light hue of the marble). This is because we have a higher number of pixels with high intensity values for all three channels. The closer the values get to 255, the more illumination we get for that color.](https://miro.medium.com/v2/resize:fit:1400/1*y9yMcwLh2SLDjDV9PUYXWQ.png) {#fig:rgb-histogram}
 
 ### Feature extraction Algorithm
 
@@ -103,7 +100,7 @@ Our features should contain three vectors with 48 components. Each vector contai
 
 ![Color histogram retrieval results (4)](https://miro.medium.com/v2/resize:fit:1400/1*A-ges3BbWXu_1z2Ar8KlvQ.png)
 
-![Fig. 9. Retrieval of images via color histogram. Titles in Red indicate an incorrect inference was made while Green titles indicate that a correct inference was made.](https://miro.medium.com/v2/resize:fit:1400/1*RS_Rp8twGNDPR5Zg4h0GxQ.png)
+![Retrieval of images via color histogram. Titles in Red indicate an incorrect inference was made while Green titles indicate that a correct inference was made.](https://miro.medium.com/v2/resize:fit:1400/1*RS_Rp8twGNDPR5Zg4h0GxQ.png) {#fig:color-histogram-results}
 
 We successfully retrieved a list of images using color histogram features. You might have noticed that most of our queries did not retrieve the proper class of images. This is because the only information we had was a color distribution of all images. On the other hand, we manage to retrieve images that have similar color distributions to our query image (images that are visually similar to our query).
 
@@ -117,21 +114,21 @@ Hopefully, this was an informative introduction to image retrieval via color his
 
 In the previous section, we explored how to retrieve images that contain a similar color distribution. This is good when you are not concerned with the actual content of the images, but what if you wanted to get images that had similar content? For example, you wanted to find images of houses with a similar architecture or even a particular building like the Louvre or the Taj Mahal. This type of image retrieval problem requires more knowledge than just the color distribution. It requires knowledge of the actual shape of the object on the images — for the most part.
 
-Using a technique called convolution we can "scan" an image and filter out contextual information from the images such as edges. If you look at Figure 10, you can see how we can extract horizontal and vertical edges within the image. Using this information we get a better understanding of the spacial qualities of the picture pixels.
+Using a technique called convolution we can "scan" an image and filter out contextual information from the images such as edges. If you look at {@fig:edge-detection}, you can see how we can extract horizontal and vertical edges within the image. Using this information we get a better understanding of the spacial qualities of the picture pixels.
 
-![Fig. 10. Horizontal and Vertical edge detection of the trevi fountain](https://miro.medium.com/v2/resize:fit:1400/1*Ld8ZaAzQNmSRbjLNb3zSpw.png)
+![Horizontal and Vertical edge detection of the trevi fountain](https://miro.medium.com/v2/resize:fit:1400/1*Ld8ZaAzQNmSRbjLNb3zSpw.png) {#fig:edge-detection}
 
-> **Fig. 11.** This is the code that was used to generate the visualization seen in Figure 10. Feel free to try it out with any other image you have around! [See the code on GitLab](https://gitlab.com/nievespg/image_retrieval_blog)
+> **Fig. 11.** This is the code that was used to generate the visualization seen in {@fig:edge-detection}. Feel free to try it out with any other image you have around! [See the code on GitLab](https://gitlab.com/nievespg/image_retrieval_blog)
 
 The use of edge detection for image matching can be traced back to the 1980s where it was leveraged to find locations of interest within an image. Two popular feature extraction algorithms, which are used to this day, are Scale Invariant Feature Transform (SIFT) [3] and Speeded Up Robust Features (SURF) [1].
 
-Both of these algorithms are able to find locations of interest — points in the image that standout — within an image. These locations of interest are called keypoints (see Figure 12). For each keypoint in the image, it also computes a feature vector known as a descriptor. Using both the keypoints and descriptors we are able to compare against images that contain similar points of interest even if the objects within the images are at different scales (scale invariance), rotated (rotation invariance), shifted (translation invariance), contain substantial occlusion, and lighting differences.
+Both of these algorithms are able to find locations of interest — points in the image that standout — within an image. These locations of interest are called keypoints (see {@fig:keypoints}). For each keypoint in the image, it also computes a feature vector known as a descriptor. Using both the keypoints and descriptors we are able to compare against images that contain similar points of interest even if the objects within the images are at different scales (scale invariance), rotated (rotation invariance), shifted (translation invariance), contain substantial occlusion, and lighting differences.
 
-![Fig. 12. Computed keypoints visualization. The color circles are the points of interest, or keypoints, located using the SIFT algorithm. The diameter of the circle represents the scale at which it was located and the line that runs from the center of the circle to the edge references the angle at which it was located.](https://miro.medium.com/v2/resize:fit:2000/1*9ESPBChd9Y3kc1IYtCzcig.png)
+![Computed keypoints visualization. The color circles are the points of interest, or keypoints, located using the SIFT algorithm. The diameter of the circle represents the scale at which it was located and the line that runs from the center of the circle to the edge references the angle at which it was located.](https://miro.medium.com/v2/resize:fit:2000/1*9ESPBChd9Y3kc1IYtCzcig.png) {#fig:keypoints}
 
-In Figure 13 we can appreciate how similar objects within two distinct images will contain similar keypoints. By extracting the SIFT features of both images we can specify the points of interest shared by instances of the "Castillo San Felipe del Morro".
+In {@fig:keypoint-matching} we can appreciate how similar objects within two distinct images will contain similar keypoints. By extracting the SIFT features of both images we can specify the points of interest shared by instances of the "Castillo San Felipe del Morro".
 
-![Fig. 13. Keypoint matching of two similar images. After computing the keypoints for both images, we are able to match them against each other. See how the algorithm was able to match the castle walls of both images using the SIFT features even though they were taken at different angles!](https://miro.medium.com/v2/resize:fit:1400/1*bd7_EY_t8oDkmebfFzjySA.png)
+![Keypoint matching of two similar images. After computing the keypoints for both images, we are able to match them against each other. See how the algorithm was able to match the castle walls of both images using the SIFT features even though they were taken at different angles!](https://miro.medium.com/v2/resize:fit:1400/1*bd7_EY_t8oDkmebfFzjySA.png) {#fig:keypoint-matching}
 
 ### Similarity metric
 
@@ -148,9 +145,9 @@ Lowe also proposes a method to maximize the likelihood of retrieving correct mat
 > "The probability that a match is correct can be determined by taking the ratio of distance from the closest neighbor to the distance of the second closest. Using a database of 40,000 keypoints, the solid line shows the PDF of this ratio for correct matches, while the dotted line is for matches that were incorrect."
 > — Neural Codes for Image Retrieval, Babenco et al.
 
-![Fig. 14. Probability Density Function (PDF) vs Closest neighbor distance ratio.](https://miro.medium.com/v2/resize:fit:1166/1*2gINiQf_-BTBcZZgrQXN6w.png)
+![Probability Density Function (PDF) vs Closest neighbor distance ratio.](https://miro.medium.com/v2/resize:fit:1166/1*2gINiQf_-BTBcZZgrQXN6w.png) {#fig:pdf-ratio}
 
-As you can see from Figure 14, the probability of retrieving a correct match increases with the ratio of the distance. We achieve diminishing returns when the distance ratio is higher than 0.70.
+As you can see from {@fig:pdf-ratio}, the probability of retrieving a correct match increases with the ratio of the distance. We achieve diminishing returns when the distance ratio is higher than 0.70.
 
 ### Keypoint Correspondence
 
@@ -162,7 +159,7 @@ Once we retrieved a list of good matches, we must make sure that query keypoints
 
 > **Fig. 15.** Load index set and define query images. [See the code on GitLab](https://gitlab.com/nievespg/image_retrieval_blog)
 
-![Fig. 16. The query images to be used in the SIFT retrieval test. Notice how I picked one image per class. By having multiple classes we can evaluate the performance and note interclass discrepancies if any.](https://miro.medium.com/v2/resize:fit:1400/1*_l0trIvCzu-0wc6rfU50wA.png)
+![The query images to be used in the SIFT retrieval test. Notice how I picked one image per class. By having multiple classes we can evaluate the performance and note interclass discrepancies if any.](https://miro.medium.com/v2/resize:fit:1400/1*_l0trIvCzu-0wc6rfU50wA.png) {#fig:query-images}
 
 - Extract the SIFT features (keypoints and descriptors) for all the images in both the query and index set.
 
@@ -190,7 +187,7 @@ Once we retrieved a list of good matches, we must make sure that query keypoints
 
 ![SIFT retrieval results (4)](https://miro.medium.com/v2/resize:fit:1400/1*Bw9PnmE8q4c0cIedx4ROaw.png)
 
-![Fig. 21. Retrieval of images via SIFT features. Titles in Red indicate an incorrect inference was made while Green titles indicate that a correct inference was made.](https://miro.medium.com/v2/resize:fit:1400/1*dsurYWQnCQZ0rmg_WwGcRw.png)
+![Retrieval of images via SIFT features. Titles in Red indicate an incorrect inference was made while Green titles indicate that a correct inference was made.](https://miro.medium.com/v2/resize:fit:1400/1*dsurYWQnCQZ0rmg_WwGcRw.png) {#fig:sift-results}
 
 By observing the results, we can see that the retrieval system was able to rank images in our dataset by similarity based on the content of the image. For every query, the first image in the similarity ranking was always the original image. Where this system improves upon the color histogram retrieval system, is in the fact that we were also able to retrieve similar, but distinct, images which share contextual information to our query.
 
@@ -214,7 +211,7 @@ As per Babenco's findings, the neural features performed competitively when comp
 
 ### Feature Extraction
 
-Within the deep convolutional layers, the network extracts information that will aid in the classification task on the lower fully connected layers. We can observe some of the properties which the convolutional blocks use to better discriminate between classes as seen in figure 22.
+Within the deep convolutional layers, the network extracts information that will aid in the classification task on the lower fully connected layers. We can observe some of the properties which the convolutional blocks use to better discriminate between classes as seen in {@fig:cnn-kernels}.
 
 ![CNN kernel visualization (block 1)](https://miro.medium.com/v2/resize:fit:1400/1*RcwgmAxA7_CEaU5D_Ns9Ww.png)
 
@@ -226,7 +223,7 @@ Within the deep convolutional layers, the network extracts information that will
 
 ![CNN kernel visualization (block 5)](https://miro.medium.com/v2/resize:fit:1400/1*ypxzWqdMHfM7lQiDImpkKA.png)
 
-![Fig. 22. VGG16 Convolutional layers kernel visualization.](https://miro.medium.com/v2/resize:fit:1400/1*g6yCw4dbb423IhE3VMD3gg.png)
+![VGG16 Convolutional layers kernel visualization.](https://miro.medium.com/v2/resize:fit:1400/1*g6yCw4dbb423IhE3VMD3gg.png) {#fig:cnn-kernels}
 
 Notice how the initial convolutional layers place higher importance on colors. Moving deeper, we start to see a mix of colors and textures emerge. In the fourth convolutional block, we start to evaluate complex textures and shapes. Finally, in the fifth convolutional layer, we see patterns that look like the creation of an artist.
 
@@ -234,7 +231,7 @@ After training a CNN (DenseNet-161) for classification tasks, we are able to com
 
 ![DenseNet-161 CAM visualization (1)](https://miro.medium.com/v2/resize:fit:1400/1*nhjnuyyByHtBONZZkJbZaw.png)
 
-![Fig. 23. DenseNet-161 Convolutional Activation Map (CAM)](https://miro.medium.com/v2/resize:fit:1400/1*cvavaoF88vSSjDQaLzX-cg.png)
+![DenseNet-161 Convolutional Activation Map (CAM)](https://miro.medium.com/v2/resize:fit:1400/1*cvavaoF88vSSjDQaLzX-cg.png) {#fig:cam}
 
 The neural network is able to prioritize locations within the image which provide the most interclass variance. In other words, the euclidean distance between features computed from images of the same class will be smaller than the distance between features computed from distinct classes.
 
@@ -246,7 +243,7 @@ The most important decision when computing deep features — other than your tra
 
 We used transfer learning to fine-tune a pre-trained DenseNet-161 on our custom 8-class landmark dataset. The idea behind transfer learning is that if we have a model that knows how to perform a task very well, we can take that model and with small modifications, we can have it learn a similar task with very little effort.
 
-![Fig. 24. DenseNet-161 Convolution Block 5 layer 1. This an example of the sort of "patterns" you will see when visualizing the kernels of an untrained kernel of a convolutional neural network. Notice how it differs from its trained counterpart in Figure 22](https://miro.medium.com/v2/resize:fit:1400/1*h1YE8T0RhnkvpmvPXKTA8w.png)
+![DenseNet-161 Convolution Block 5 layer 1. This an example of the sort of "patterns" you will see when visualizing the kernels of an untrained kernel of a convolutional neural network. Notice how it differs from its trained counterpart.](https://miro.medium.com/v2/resize:fit:1400/1*h1YE8T0RhnkvpmvPXKTA8w.png) {#fig:untrained-kernel}
 
 Many of the initial convolution properties are simple enough that they can be learned by most datasets. Once we get to the lower level convolution blocks — block three to five — is where we start to learn representations unique to our images.
 
@@ -284,7 +281,7 @@ One of the benefits of deep features is that we do not have to worry about corre
 
 ![Deep features retrieval results (4)](https://miro.medium.com/v2/resize:fit:1400/1*AomTOOXf3wgOwAWuZgE9gw.png)
 
-![Fig. 30. Retrieval of images via deep features. Titles in Red indicate an incorrect inference was made while Green titles indicate that a correct inference was made.](https://miro.medium.com/v2/resize:fit:1400/1*PXcLHwGesFhZZFYu2Zrx6g.png)
+![Retrieval of images via deep features. Titles in Red indicate an incorrect inference was made while Green titles indicate that a correct inference was made.](https://miro.medium.com/v2/resize:fit:1400/1*PXcLHwGesFhZZFYu2Zrx6g.png) {#fig:deep-features-results}
 
 Even though the preprocessing step was a bit more involved, notice how simple it was to retrieve similar images at query time. Overall, the performance of the deep features was comparable to the local descriptors. Storing all of the deep features only took 87MB, this is a substantial reduction in space complexity, with minimal loss in performance, when compared to the SIFT features — this could be further reduced using dimensionality reduction.
 

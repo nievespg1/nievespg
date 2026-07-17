@@ -86,9 +86,25 @@
 
 .prose figcaption {
   font-size: var(--font-size-sm);
-  color: var(--color-text-tertiary);
+  color: var(--color-text-secondary);
   text-align: center;
   margin-top: var(--space-xs);
+}
+
+/* ── Cross-reference links inside prose ──────────────────────────────── */
+.prose a.ref {
+  text-decoration: none;
+  color: var(--color-primary);
+  font-weight: var(--font-weight-semibold);
+}
+.prose a.ref:hover {
+  text-decoration: underline;
+}
+
+.prose .ref-unknown {
+  color: var(--color-error, #b91c1c);
+  font-size: var(--font-size-sm);
+  cursor: help;
 }
 
 /* ── Lists inside prose ────────────────────────────────────────────────── */

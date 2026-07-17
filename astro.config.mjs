@@ -1,6 +1,7 @@
 import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
 import { visit } from "unist-util-visit";
+import remarkCaptions from "./src/plugins/remark-captions.mjs";
 
 /**
  * Rehype plugin that adds target="_blank" and rel="noopener noreferrer"
@@ -26,6 +27,7 @@ export default defineConfig({
     shikiConfig: {
       theme: "github-light",
     },
+    remarkPlugins: [remarkCaptions],
     rehypePlugins: [rehypeExternalLinks],
   },
 });
