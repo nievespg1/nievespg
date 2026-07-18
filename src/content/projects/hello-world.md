@@ -9,6 +9,21 @@ technologies:
   - MDX
 featured: true
 github: "https://github.com/nievespg1/nievespg"
+ai:
+  include: true
+  priority: medium
+  audiences:
+    - technical-interviewer
+    - hiring-manager
+  skills:
+    - astro
+    - typescript
+    - web-development
+    - frontend
+  canonicalPath: /projects/hello-world
+  summary: >
+    Designed and built a personal portfolio and blog with Astro,
+    emphasizing readability, performance, and maintainable architecture.
 ---
 
 ## Architecture

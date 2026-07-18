@@ -2,6 +2,19 @@
 section: "education"
 order: 2
 title: "Polytechnic University of Puerto Rico — Undergraduate Courseware"
+ai:
+  include: true
+  priority: low
+  audiences:
+    - recruiter
+  skills:
+    - computer-science
+    - computer-engineering
+    - dsp
+  canonicalPath: /resume
+  summary: >
+    Undergraduate coursework in Computer Science, Computer Engineering,
+    and Electrical Engineering at Polytechnic University of Puerto Rico.
 ---
 
 **July 2009 – July 2017**

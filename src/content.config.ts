@@ -1,5 +1,15 @@
 import { defineCollection, z } from "astro:content";
 
+// ── Shared AI Metadata Schema ────────────────────────────────────────────
+const aiSchema = z.object({
+  include: z.boolean().default(true),
+  priority: z.enum(["high", "medium", "low"]).optional(),
+  audiences: z.array(z.string()).optional(),
+  skills: z.array(z.string()).optional(),
+  canonicalPath: z.string().optional(),
+  summary: z.string().optional(),
+});
+
 // ── Blog Collection ──────────────────────────────────────────────────────
 const blog = defineCollection({
   type: "content",
@@ -12,6 +22,7 @@ const blog = defineCollection({
     featured: z.boolean().default(false),
     draft: z.boolean().default(false),
     image: z.string().optional(),
+    ai: aiSchema.optional(),
   }),
 });
 
@@ -26,7 +37,9 @@ const projects = defineCollection({
     website: z.string().url().optional(),
     paper: z.string().url().optional(),
     featured: z.boolean().default(false),
+    draft: z.boolean().default(false),
     image: z.string().optional(),
+    ai: aiSchema.optional(),
   }),
 });
 
@@ -44,7 +57,9 @@ const resume = defineCollection({
       "training",
     ]),
     order: z.number().default(0),
+    draft: z.boolean().default(false),
     title: z.string(),
+    ai: aiSchema.optional(),
   }),
 });
 

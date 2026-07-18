@@ -9,6 +9,22 @@ technologies:
  - Core Location
  - SQL
 featured: true
+ai:
+  include: true
+  priority: medium
+  audiences:
+    - recruiter
+    - hiring-manager
+  skills:
+    - ios
+    - swift
+    - mobile-development
+    - mapkit
+    - startup
+  canonicalPath: /projects/spotin
+  summary: >
+    Co-founded an ecotourism startup and developed a Swift-based iOS app
+    with MapKit integration, location-based discovery, and bookmarking features.
 ---
 
 Note: The codebase belongs to a private customer and is not publicly available. 

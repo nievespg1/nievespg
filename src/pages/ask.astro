@@ -1,0 +1,305 @@
+---
+// Ask Gabriel — AI assistant landing page
+// Introduces visitors to the AI-powered chat experience and directs
+// them to the externally hosted chat application.
+import ContentLayout from "../layouts/ContentLayout.astro";
+import Container from "../components/ui/Container.astro";
+import Surface from "../components/ui/Surface.astro";
+import Button from "../components/ui/Button.astro";
+import Heading from "../components/ui/Heading.astro";
+
+const chatUrl = "https://chat.nievespg.com";
+
+const suggestedQuestions = [
+  {
+    text: "What experience does Gabriel have with machine learning?",
+    query: "What experience does Gabriel have with machine learning?",
+  },
+  {
+    text: "What performance improvements has he delivered?",
+    query: "What performance improvements has he delivered?",
+  },
+  {
+    text: "Which projects demonstrate distributed-systems experience?",
+    query: "Which projects demonstrate distributed-systems experience?",
+  },
+  {
+    text: "How closely does his background align with this job description?",
+    query: "How closely does his background align with this job description?",
+  },
+  {
+    text: "Summarize his research on image retrieval.",
+    query: "Summarize his research on image retrieval.",
+  },
+  {
+    text: "Tell me about his experience at Microsoft.",
+    query: "Tell me about his experience at Microsoft.",
+  },
+];
+---
+
+<ContentLayout
+  title="Ask Gabriel — AI Assistant"
+  description="Explore my professional experience, projects, research, and technical writing through an AI-assisted conversation."
+>
+  <!-- Hero -->
+  <section class="ask-hero">
+    <Container size="page">
+      <div class="ask-hero-inner animate-fade-in-up">
+        <h1 class="ask-hero-title">Ask about my work</h1>
+        <p class="ask-hero-subtitle">
+          Explore my professional experience, projects, research, and technical
+          writing through an AI-assisted conversation. The assistant answers
+          questions using public material from this portfolio, including my
+          r&eacute;sum&eacute;, project case studies, and published articles.
+        </p>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Suggested Questions -->
+  <Container>
+    <section class="ask-questions animate-fade-in-up">
+      <Heading level={2}>Suggested questions</Heading>
+      <div class="ask-questions-grid">
+        {suggestedQuestions.map((q) => (
+          <a
+            href={`${chatUrl}?q=${encodeURIComponent(q.query)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="ask-question-card"
+          >
+            <Surface padding="lg">
+              <div class="ask-question-content">
+                <svg
+                  class="ask-question-icon"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                  <line x1="12" y1="17" x2="12.01" y2="17" />
+                </svg>
+                <span class="ask-question-text">{q.text}</span>
+              </div>
+            </Surface>
+          </a>
+        ))}
+      </div>
+    </section>
+  </Container>
+
+  <!-- CTA -->
+  <section class="ask-cta">
+    <Container>
+      <div class="ask-cta-inner animate-fade-in-up">
+        <Heading level={2}>Ready to start a conversation?</Heading>
+        <p class="ask-cta-text">
+          Ask anything about my work, background, or technical interests.
+        </p>
+        <Button href={chatUrl} variant="primary">
+          Start a conversation &rarr;
+        </Button>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Disclosure -->
+  <Container>
+    <section class="ask-disclosure">
+      <Surface padding="md">
+        <div class="ask-disclosure-inner">
+          <svg
+            class="ask-disclosure-icon"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="16" x2="12" y2="12" />
+            <line x1="12" y1="8" x2="12.01" y2="8" />
+          </svg>
+          <p>
+            This assistant uses artificial intelligence and may occasionally
+            make mistakes. Verify important information using the portfolio
+            sources referenced in its responses.
+          </p>
+        </div>
+      </Surface>
+    </section>
+  </Container>
+</ContentLayout>
+
+<style>
+  /* ── Hero ─────────────────────────────────────────────────────────────── */
+  .ask-hero {
+    padding: var(--space-4xl) 0 var(--space-3xl);
+    background: linear-gradient(
+      180deg,
+      var(--color-primary-light) 0%,
+      var(--color-accent-light) 100%
+    );
+    text-align: center;
+    position: relative;
+  }
+
+  [data-theme="light"] .ask-hero {
+    background: linear-gradient(
+      180deg,
+      var(--color-primary-muted) 0%,
+      var(--color-surface) 100%
+    );
+  }
+
+  .ask-hero-inner {
+    max-width: var(--content-width-wide);
+    margin: 0 auto;
+  }
+
+  .ask-hero-title {
+    font-family: var(--font-serif);
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    letter-spacing: var(--letter-spacing-tight);
+    color: var(--color-text);
+    margin-bottom: var(--space-md);
+  }
+
+  .ask-hero-subtitle {
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-relaxed);
+    color: var(--color-text-secondary);
+    max-width: var(--content-width);
+    margin: 0 auto;
+  }
+
+  /* ── Suggested Questions ──────────────────────────────────────────────── */
+  .ask-questions {
+    padding: var(--space-3xl) 0 var(--space-xl);
+  }
+
+  .ask-questions-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+  }
+
+  .ask-question-card {
+    text-decoration: none;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    display: flex;
+  }
+
+  .ask-question-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .ask-question-card:hover .ask-question-content {
+    border-color: var(--color-primary-muted);
+  }
+
+  .ask-question-card :global(.surface) {
+    display: flex;
+    flex: 1;
+    align-items: center;
+  }
+
+  .ask-question-content {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    flex: 1;
+  }
+
+  .ask-question-icon {
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: var(--color-primary);
+  }
+
+  .ask-question-text {
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-normal);
+    color: var(--color-text-secondary);
+  }
+
+  .ask-question-card:hover .ask-question-text {
+    color: var(--color-primary);
+  }
+
+  /* ── CTA ──────────────────────────────────────────────────────────────── */
+  .ask-cta {
+    padding: var(--space-3xl) 0;
+    text-align: center;
+  }
+
+  .ask-cta-inner {
+    max-width: var(--content-width);
+    margin: 0 auto;
+  }
+
+  .ask-cta-text {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-lg);
+  }
+
+  .ask-cta-inner :global(.heading) {
+    margin-bottom: var(--space-sm);
+  }
+
+  /* ── Disclosure ───────────────────────────────────────────────────────── */
+  .ask-disclosure {
+    padding-bottom: var(--space-4xl);
+  }
+
+  .ask-disclosure-inner {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-tertiary);
+    line-height: var(--line-height-normal);
+  }
+
+  .ask-disclosure-icon {
+    flex-shrink: 0;
+    margin-top: 3px;
+    color: var(--color-text-tertiary);
+  }
+
+  .ask-disclosure-inner p {
+    margin: 0;
+  }
+
+  /* ── Responsive ───────────────────────────────────────────────────────── */
+  @media (max-width: 640px) {
+    .ask-questions-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .ask-hero {
+      padding: var(--space-3xl) 0 var(--space-2xl);
+    }
+
+    .ask-hero-title {
+      font-size: var(--font-size-3xl);
+    }
+  }
+</style>

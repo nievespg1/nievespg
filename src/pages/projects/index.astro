@@ -6,7 +6,7 @@ import Container from "../../components/ui/Container.astro";
 import Stack from "../../components/ui/Stack.astro";
 import Surface from "../../components/ui/Surface.astro";
 
-const projects = await getCollection("projects");
+const projects = await getCollection("projects", ({ data }) => !data.draft);
 projects.sort((a, b) => {
   if (a.data.featured && !b.data.featured) return -1;
   if (!a.data.featured && b.data.featured) return 1;

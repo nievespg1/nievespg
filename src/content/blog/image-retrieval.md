@@ -7,6 +7,22 @@ tags: ["Image Retrieval", "Machine Learning", "PyTorch", "NumPy", "Python", "Com
 featured: true
 draft: false
 image: "https://miro.medium.com/v2/resize:fit:2000/1*UN0fkaWdyxyt2OdbbhLQzA.jpeg"
+ai:
+  include: true
+  priority: high
+  audiences:
+    - technical-interviewer
+    - hiring-manager
+  skills:
+    - computer-vision
+    - image-retrieval
+    - deep-learning
+    - python
+  canonicalPath: /blog/image-retrieval
+  summary: >
+    A comprehensive technical introduction to image retrieval methods,
+    from color histograms and SIFT keypoints to deep neural codes using
+    DenseNet-161, with RANSAC geometric verification.
 ---
 
 ![Convolutional Activation Map (CAM)](https://miro.medium.com/v2/resize:fit:2000/1*UN0fkaWdyxyt2OdbbhLQzA.jpeg)

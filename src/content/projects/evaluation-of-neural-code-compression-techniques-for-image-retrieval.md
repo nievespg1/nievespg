@@ -12,6 +12,22 @@ technologies:
   - Image Retrieval
 featured: true
 paper: "https://drive.google.com/file/d/1KcHh7nALWzn1dHgPgrlvfTWjfgTQ8-wO/view"
+ai:
+  include: true
+  priority: high
+  audiences:
+    - technical-interviewer
+    - hiring-manager
+  skills:
+    - computer-vision
+    - image-retrieval
+    - deep-learning
+    - research
+    - dimensionality-reduction
+  canonicalPath: /projects/evaluation-of-neural-code-compression-techniques-for-image-retrieval
+  summary: >
+    Evaluated PCA and LDA compression techniques for neural codes across
+    ResNet-50, DenseNet161, and VGG16 architectures for image retrieval tasks.
 ---
 
 **Gabriel Nieves-Ponce**  

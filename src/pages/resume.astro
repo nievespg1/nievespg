@@ -3,7 +3,7 @@
 import { getCollection } from "astro:content";
 import ResumeLayout from "../layouts/ResumeLayout.astro";
 
-const sections = await getCollection("resume");
+const sections = await getCollection("resume", ({ data }) => !data.draft);
 ---
 
 <ResumeLayout

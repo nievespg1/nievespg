@@ -2,6 +2,25 @@
 section: "experience"
 order: 3
 title: "Machine Learning Engineer II — Department of Defense (Fort Meade, MD)"
+ai:
+  include: true
+  priority: high
+  audiences:
+    - recruiter
+    - hiring-manager
+    - technical-interviewer
+  skills:
+    - computer-vision
+    - image-retrieval
+    - deep-learning
+    - distributed-systems
+    - performance-engineering
+    - python
+  canonicalPath: /resume
+  summary: >
+    Developed a scalable semantic image retrieval system for petabyte-scale
+    datasets, researched feature extraction methodologies, and improved
+    distributed filesystem I/O performance by 5x.
 ---
 
 **January 2019 – July 2020**
