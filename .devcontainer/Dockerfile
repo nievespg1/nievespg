@@ -75,4 +75,4 @@ RUN npm config set prefix /home/vscode/.npm-global \
 # Initialize micromamba shell for the vscode user
 RUN micromamba shell init -s bash -r /home/vscode/micromamba
 
-WORKDIR /workspace/sensor-fusion
+WORKDIR /workspace/nievespg

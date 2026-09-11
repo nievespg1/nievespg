@@ -17,7 +17,7 @@ echo "Installing Claude Code CLI..."
 npm install -g --allow-scripts=@anthropic-ai/claude-code @anthropic-ai/claude-code
 
 # copy global settings if available
-if [ -n "$CLAUDE_CODE_SETTINGS" ]; then
+if [ -n "$CLAUDE_CODE_SETTINGS" ] && [ -f "$CLAUDE_CODE_SETTINGS" ]; then
   echo "Copying global Claude Code CLI settings to devcontainer..."
   mkdir -p "$HOME/.claude"
   cp "$CLAUDE_CODE_SETTINGS" "$HOME/.claude/"

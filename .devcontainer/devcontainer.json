@@ -5,7 +5,8 @@
     "context": ".."
   },
   "containerEnv": {
-    "CLAUDE_CODE_SETTINGS": "/mnt/c/Users/Work Gabe/.claude/settings.json"
+    "GH_CONFIG_DIR": "/home/vscode/.config/gh-devcontainer",
+    "CLAUDE_CODE_SETTINGS": "/mnt/c/Users/gabri/.claude/settings.json"
   },
   "runArgs": [
     "--gpus",
@@ -15,7 +16,7 @@
     "--mount",
     "type=bind,source=F:\\,target=/mnt/ssd,consistency=cached",
     "--mount",
-    "type=bind,source=D:\\,target=/mnt/hdd,consistency=cached"
+    "type=bind,source=S:\\,target=/mnt/hdd,consistency=cached"
   ],
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspace/nievespg,type=bind,consistency=cached",
   "workspaceFolder": "/workspace/nievespg",
@@ -23,7 +24,7 @@
     "vscode": {
       "settings": {
         "terminal.integrated.shell.linux": "/bin/bash",
-        "python.defaultInterpreterPath": "/home/vscode/micromamba/envs/sfx/bin/python"
+        "python.defaultInterpreterPath": "/home/vscode/micromamba/envs/nievespg/bin/python"
       },
       "extensions": [
         "ms-vscode.cpptools",
@@ -33,6 +34,11 @@
       ]
     }
   },
+  "initializeCommand": ["powershell.exe", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${localWorkspaceFolder}/.devcontainer/scripts/export_gh_auth.ps1"],
+  "mounts": [
+    "source=${localEnv:APPDATA}/nievespg-devcontainer/gh,target=/mnt/host-gh,type=bind,readonly"
+  ],
   "postCreateCommand": "bash .devcontainer/scripts/post-create.sh",
+  "postStartCommand": "bash .devcontainer/scripts/sync_gh_auth.sh",
   "remoteUser": "vscode"
 }

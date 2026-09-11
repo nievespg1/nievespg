@@ -3,6 +3,9 @@
 
 set -e
 
+# Also support running this installer directly, outside post-create.sh.
+export PATH="$HOME/.local/bin:$PATH"
+
 echo "Installing Antigravity..."
 curl -fsSL https://antigravity.google/cli/install.sh | bash
 

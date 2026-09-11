@@ -3,10 +3,16 @@
 
 set -e
 
+# Make user-installed CLIs available to this process and every setup script.
+export PATH="$HOME/.local/bin:$HOME/.npm-global/bin:$PATH"
+
 # Get the directory of the current script to reference sibling scripts reliably
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 echo "Running post-create scripts..."
+
+# Install GitHub CLI and check the shared Windows authentication.
+bash "$SCRIPT_DIR/install_gh.sh"
 
 # Run install_antigravity.sh
 bash "$SCRIPT_DIR/install_antigravity.sh"
@@ -25,4 +31,3 @@ bash "$SCRIPT_DIR/install_node_deps.sh"
 
 # Configure git
 bash "$SCRIPT_DIR/setup_git.sh"
-
