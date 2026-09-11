@@ -2,6 +2,7 @@
 section: "experience"
 order: 1
 title: "Senior Data Scientist — Microsoft (Reston, VA)"
+clearanceRequirement: "TS/SCI with polygraph"
 ai:
   include: true
   priority: high

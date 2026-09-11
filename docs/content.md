@@ -54,6 +54,17 @@ Description of role, achievements, and responsibilities.
 
 Available sections: `education`, `experience`, `certifications`, `awards`, `skills`. The `order` field controls display order within each section group.
 
+Experience entries may set an optional `clearanceRequirement` string, such as
+`clearanceRequirement: "TS/SCI with polygraph"`. It describes the job's
+requirement; omission means unspecified. It does not establish the person's
+current clearance status and does not change the resume header.
+
+Ask Gabriel indexes the entry title, `ai.summary` (or a project `summary` / blog
+`description` fallback), clearance requirement, technologies, and skills with
+the Markdown body. Keep AI inclusion controls under `ai`; role facts such as
+`clearanceRequirement` belong at the top level. Changes under `src/content/`
+trigger the existing content-refresh webhook once published to `main`.
+
 ## Drafts
 
 Set `draft: true` in the frontmatter to keep a post unpublished. Draft posts are excluded from the build and won't appear in listings or dynamic routes.

@@ -59,6 +59,7 @@ const resume = defineCollection({
     order: z.number().default(0),
     draft: z.boolean().default(false),
     title: z.string(),
+    clearanceRequirement: z.string().trim().min(1).optional(),
     ai: aiSchema.optional(),
   }),
 });
