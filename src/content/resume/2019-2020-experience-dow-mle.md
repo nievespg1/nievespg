@@ -1,8 +1,8 @@
 ---
 section: "experience"
 order: 3
-title: "Machine Learning Engineer II — Department of Defense (Fort Meade, MD)"
-clearanceRequirement: "TS/SCI with polygraph"
+title: "Machine Learning Engineer II — Department of War"
+clearanceRequirement: "Top Secret/Sensitive Compartmented Information (TS/SCI) with polygraph"
 ai:
   include: true
   priority: high
