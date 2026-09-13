@@ -18,9 +18,7 @@ ai:
     - llm
   canonicalPath: /resume
   summary: >
-    Senior Data Scientist at Microsoft leading GraphRAG development,
-    including co-developing LazyGraphRAG and co-leading the GraphRAG
-    Accelerator API open-source release.
+    Senior AI/ML Engineer at google.
 ---
 
 **November 2025 – Present**
