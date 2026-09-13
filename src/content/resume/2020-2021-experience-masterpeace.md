@@ -1,6 +1,6 @@
 ---
 section: "experience"
-order: 2
+order: 3
 title: "Cloud Software Engineer II — MasterPeace Solutions (Columbia, MD)"
 clearanceRequirement: "Top Secret/Sensitive Compartmented Information (TS/SCI) with polygraph"
 ai:

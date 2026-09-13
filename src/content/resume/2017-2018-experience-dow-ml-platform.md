@@ -1,6 +1,6 @@
 ---
 section: experience
-order: 4
+order: 5
 title: Software Engineer I — Department of War
 clearanceRequirement: "Top Secret/Sensitive Compartmented Information (TS/SCI) with polygraph"
 ai:
@@ -23,7 +23,7 @@ ai:
 
 **June 2017 – May 2018**
 
-Worked within the Computer Science Development Program to build a machine learning platform providing researchers with access to a GPU-enabled high-performance computing cluster.
+Built a machine learning platform to provide researchers with access to a GPU-enabled high-performance computing cluster.
 
 #### Key Accomplishments
 

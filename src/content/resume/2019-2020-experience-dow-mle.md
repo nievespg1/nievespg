@@ -1,6 +1,6 @@
 ---
 section: "experience"
-order: 3
+order: 4
 title: "Machine Learning Engineer II — Department of War"
 clearanceRequirement: "Top Secret/Sensitive Compartmented Information (TS/SCI) with polygraph"
 ai:
@@ -25,6 +25,10 @@ ai:
 ---
 
 **January 2019 – July 2020**
+
+Researched semantic image retrieval for petabyte-scale datasets and improved distributed filesystem read performance by 5×.
+
+#### Key Accomplishments
 
 - Developed a scalable semantic image retrieval system for petabyte-scale datasets.
 - Researched image feature extraction and indexing methodologies.

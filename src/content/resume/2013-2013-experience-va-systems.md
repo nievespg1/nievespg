@@ -1,6 +1,6 @@
 ---
 section: experience
-order: 7
+order: 8
 title: System Administrator Assistant — U.S. Department of Veterans Affairs
 ai:
   include: true
@@ -20,7 +20,7 @@ ai:
 
 **February 2013 – May 2013**
 
-Provided part-time support to the system administrator for maintenance and configuration of agency networks and devices.
+Provided part-time support to system administrators for maintenance and configuration of agency networks and devices.
 
 #### Key Accomplishments
 

@@ -11,6 +11,10 @@ ai:
     - machine-learning
     - deep-learning
     - statistical-learning
+    - google cloud auto ml
+    - google cloud vertex ai
+    - google cloud platform (GCP)
+    - google BigQuery
     - pytorch
   canonicalPath: /resume
   summary: >
@@ -18,6 +22,7 @@ ai:
     machine learning through Udacity and Stanford Online.
 ---
 
+- **Professional Machine Learning Engineer Certification** - Google Cloud (February 2026)
 - **Introduction to Statistical Learning with PyTorch** — Udacity Nanodegree (Nov 2020 – Jun 2021)
 - **Deep Learning Nanodegree** — Udacity (Jan 2019 – Jun 2019)
 - **Introduction to Machine Learning** — Stanford Online, Coursera (Jan 2018 – Apr 2018)

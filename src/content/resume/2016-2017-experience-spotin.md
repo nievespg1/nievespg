@@ -1,6 +1,6 @@
 ---
 section: experience
-order: 5
+order: 6
 title: Founder — Spotin Inc.
 clearanceRequirement: "Top Secret/Sensitive Compartmented Information (TS/SCI) with polygraph"
 ai:
@@ -28,7 +28,7 @@ Founded an ecotourism startup connecting local guides with residents and visitor
 
 #### Key Accomplishments
 
-- Created and maintained the **Spotin iOS application in Swift 3.0**, supporting map-based discovery, location sharing, fuzzy search, and bucket-list features.
+- Created and maintained the **Spotin iOS application in Swift 3.0**, supporting map-based discovery, and fuzzy search capabilities.
 - Developed the **Spotter web dashboard** for local guides to create, manage, and monitor tour offerings using React, Redux, Redux Form, Material UI, and Immutable.js.
 - Conducted customer interviews and refined the business model through the **Guayacán / National Science Foundation I-Corps program**.
 - Completed I-Corps and was accepted into **Guayacán's EnterPRize seed-funding competition**.

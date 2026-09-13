@@ -1,6 +1,6 @@
 ---
 section: "experience"
-order: 1
+order: 2
 title: "Senior Data Scientist — Microsoft (Reston, VA)"
 clearanceRequirement: "Top Secret/Sensitive Compartmented Information (TS/SCI) with polygraph"
 ai:
@@ -23,7 +23,7 @@ ai:
     Accelerator API open-source release.
 ---
 
-**November 2021 – Present**
+**November 2021 – November 2025**
 
 As a Senior Data Scientist, I lead customer-facing initiatives, encompassing the ownership, execution, and design of tailored solutions for complex, fast-moving challenges.
 
