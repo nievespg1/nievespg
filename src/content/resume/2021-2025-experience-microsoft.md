@@ -25,7 +25,7 @@ ai:
 
 **November 2021 – November 2025**
 
-As a Senior Data Scientist, I lead customer-facing initiatives, encompassing the ownership, execution, and design of tailored solutions for complex, fast-moving challenges.
+As a Senior Data Scientist, I led customer-facing initiatives, encompassing the ownership, execution, and design of tailored solutions to complex challenges.
 
 #### Key Accomplishments
 
@@ -38,6 +38,8 @@ As a Senior Data Scientist, I lead customer-facing initiatives, encompassing the
 - Co-led the design and development of the **GraphRAG Accelerator v2.0.0 API**, culminating in its open-source release:
   [github.com/azure-samples/graphrag-accelerator](https://github.com/azure-samples/graphrag-accelerator)
 
-- Developed a stochastic gradient descent–inspired data triage algorithm that automates dataset attribute parameterization, embedding generation, clustering, and user-defined configuration pipelines. Delivered as a Python package with a Bash CLI.
+- Developed a data triage algorithm that automates attribute profiling, embedding, and clustering based on user-defined configurations. This solution was delivered as a Python package with a Bash CLI.
 
-- Developed a scalable multi-threaded Python interface for SQL databases utilizing linear algebra algorithms, image masking techniques, and object-oriented design. The solution achieved an order-of-magnitude throughput improvement and contributed to the extension of a strategic customer engagement.
+- Developed bespoke panoptic segmentation, object localization and classification models from multi sensory data.
+
+- Developed a scalable multi-threaded Python interface for SQL databases, optimized for iterative processes with linear algebra optimizations, image masking, and object-oriented design principles.

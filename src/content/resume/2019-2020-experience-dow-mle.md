@@ -31,7 +31,7 @@ Researched semantic image retrieval for petabyte-scale datasets and improved dis
 #### Key Accomplishments
 
 - Developed a scalable semantic image retrieval system for petabyte-scale datasets.
-- Researched image feature extraction and indexing methodologies.
+- Researched image feature extraction and indexing methodologies, incorporating both learned neural features and traditional descriptors.
 - Built a testing platform for evaluating storage architectures and retrieval algorithms.
 - Helped characterize speed/accuracy tradeoffs for production research systems.
 - Created a Python package for serialization/deserialization of quantized image feature vectors.
